@@ -5,317 +5,396 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qr.dev | Simple, Permanent QR</title>
     <style>
-        /* --- Modern Grid Layout Theme Variables --- */
+        /* --- Modern Dark Layout Variables --- */
         :root {
-            --bg-main: #fafafa;
-            --bg-dark-block: #0b0b0c;
-            --text-main: #111111;
-            --text-muted: #666666;
-            --accent-glow: #e2e2e5;
-            --border-grid: 1px solid #e5e5e7;
+            --bg-page: #0a0a0c;
+            --bg-surface: #121215;
+            --bg-card: #18181c;
+            --text-dark: #ffffff;
+            --text-gray: #8e8e93;
+            --accent: #ffffff;
+            --accent-invert: #000000;
+            --border-soft: rgba(255, 255, 255, 0.08);
+            --shadow-soft: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.4;
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* --- Split-Screen Wrapper --- */
-        .app-container {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            min-height: 100vh;
-        }
-
-        /* --- Left Column: Navigation & Core Content --- */
-        .left-panel {
-            padding: 3rem 4rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-right: var(--border-grid);
-        }
-
-        /* Top Bar Layout */
+        /* --- Refined Navbar --- */
         nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4rem;
+            padding: 1.25rem 6%;
+            background: rgba(10, 10, 12, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-soft);
         }
 
         .brand {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: var(--text-main);
+            color: var(--text-dark);
             text-decoration: none;
             letter-spacing: -0.5px;
         }
 
-        .brand span { color: var(--text-muted); }
+        .brand span {
+            color: var(--text-gray);
+        }
 
         .nav-links {
             display: flex;
             gap: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            border: 1px solid var(--border-soft);
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            color: var(--text-dark);
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: color 0.2s ease;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
         }
 
-        .nav-links a:hover { color: var(--text-main); }
-
-        /* Content Blocks */
-        .hero-section {
-            max-width: 580px;
-            margin: auto 0;
+        .nav-links a:hover {
+            opacity: 1;
         }
 
-        .hero-section h1 {
-            font-size: 4rem;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            font-weight: 800;
-            margin-bottom: 2rem;
-        }
-
-        .hero-section p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            line-height: 1.6;
-        }
-
-        /* Action Buttons */
-        .cta-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .btn-solid {
-            padding: 1rem 2.2rem;
-            background: var(--text-main);
-            color: #ffffff;
-            border-radius: 6px;
+        .btn-pill {
+            padding: 0.6rem 1.4rem;
+            background: var(--accent);
+            color: var(--accent-invert);
+            border-radius: 100px;
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-
-        .btn-solid:hover { opacity: 0.9; }
-
-        .btn-outline {
-            padding: 1rem 2.2rem;
-            background: transparent;
-            color: var(--text-main);
-            border: 2px solid var(--text-main);
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .btn-outline:hover { background: rgba(0,0,0,0.03); }
-
-        /* Capabilities Panel (Inline) */
-        .capabilities-panel {
-            margin-top: 4rem;
-            padding-top: 3rem;
-            border-top: var(--border-grid);
-        }
-
-        .capabilities-panel h3 {
             font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .capabilities-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .cap-item h4 {
-            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
         }
 
-        .cap-item p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.5;
+        .btn-pill:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
         }
 
-        /* Left Panel Footer */
-        .panel-footer {
-            margin-top: 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* --- Right Column: Immersive QR Display & Fast Contact --- */
-        .right-panel {
-            background-color: var(--bg-dark-block);
-            color: #ffffff;
-            padding: 4rem;
+        /* --- Centered Hero Layout --- */
+        header {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
             text-align: center;
+            min-height: 100vh;
+            padding: 160px 6% 100px 6%;
+            max-width: 1200px;
+            margin: 0 auto;
             position: relative;
         }
 
-        /* Visual QR Container Card */
-        .showcase-box {
-            background: #161617;
-            padding: 3rem;
-            border-radius: 24px;
-            margin: auto 0;
-            border: 1px solid #28282a;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        .hero-text {
+            max-width: 850px;
+            margin-bottom: 4rem;
         }
 
-        .showcase-box img {
+        .hero-text h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            letter-spacing: -0.05em;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .hero-text p {
+            font-size: 1.35rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Hero QR Framing */
+        .hero-visual {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .qr-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 32px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-soft);
+            transition: transform 0.4s ease;
+        }
+
+        .qr-card:hover {
+            transform: scale(1.02);
+        }
+
+        .qr-card img {
             width: 240px;
             height: 240px;
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 12px;
+            border-radius: 16px;
+            display: block;
+            filter: invert(1); /* Inverts the QR API block output to match dark mode */
+        }
+
+        .qr-caption {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- Grid & Panel Section Layout --- */
+        .services {
+            padding: 10rem 6%;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .service-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-header {
+            margin-bottom: 5rem;
+        }
+
+        .service-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+        }
+
+        .service-item {
+            background: var(--bg-card);
+            padding: 4rem;
+            border-radius: 24px;
+            text-align: left;
+            border: 1px solid var(--border-soft);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-item.highlight-panel {
+            background: linear-gradient(135deg, #1c1c21 0%, #121215 100%);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-gray);
+        }
+
+        .service-item h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .service-item p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .stat-box {
+            border-left: 2px solid var(--accent);
+            padding-left: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box min {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-gray);
+        }
+
+        /* --- Split Footer Layout --- */
+        footer {
+            padding: 8rem 6% 4rem 6%;
+            background: var(--bg-page);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-split {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 4rem;
+            margin-bottom: 8rem;
+        }
+
+        .footer-left h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.2;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .contact-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-decoration: none;
+            letter-spacing: -0.04em;
+            transition: opacity 0.3s ease;
             display: block;
         }
 
-        .showcase-box .caption {
-            margin-top: 1.5rem;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #86868b;
+        .contact-number:hover {
+            opacity: 0.7;
         }
 
-        /* Contact Block styling */
-        .contact-block {
-            width: 100%;
-            text-align: left;
-        }
-
-        .contact-block h2 {
+        .footer-bottom {
             font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #86868b;
-            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-soft);
+            padding-top: 2.5rem;
         }
 
-        .contact-link {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-decoration: none;
-            letter-spacing: -1px;
-            transition: color 0.2s;
+        /* --- Responsive Design --- */
+        @media (max-width: 1024px) {
+            .hero-text h1 { font-size: 4rem; }
+            .service-grid { grid-template-columns: 1fr; }
+            .footer-split { flex-direction: column; gap: 3rem; }
+            .footer-right { text-align: left; }
+            .contact-number { font-size: 3.5rem; }
         }
 
-        .contact-link:hover { color: #d2d2d7; }
-
-        /* --- Responsive Configurations --- */
-        @media (max-width: 1100px) {
-            .app-container { grid-template-columns: 1fr; }
-            .left-panel { border-right: none; border-bottom: var(--border-grid); padding: 3rem 2rem; }
-            .right-panel { padding: 4rem 2rem; min-height: 60vh; }
-            .hero-section h1 { font-size: 3rem; }
-        }
-
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
+            nav { padding: 1rem 6%; }
             .nav-links { display: none; }
-            .capabilities-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .cta-group { flex-direction: column; align-items: flex-start; }
-            .btn-solid, .btn-outline { width: 100%; text-align: center; }
-            .contact-link { font-size: 1.85rem; }
+            .hero-text h1 { font-size: 3rem; }
+            .hero-text p { font-size: 1.1rem; }
+            .service-item { padding: 2.5rem; }
+            .service-header h2 { font-size: 2.2rem; }
+            .contact-number { font-size: 2.5rem; }
+            .footer-left h2 { font-size: 2.5rem; }
+            .footer-bottom { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <nav>
+        <a href="#" class="brand">Qr<span>.dev</span></a>
+        <div class="nav-links">
+            <a href="#overview">Overview</a>
+            <a href="#capabilities">Capabilities</a>
+        </div>
+        <a href="#contact" class="btn-pill">Get Started</a>
+    </nav>
+
+    <header id="overview">
+        <div class="hero-text">
+            <h1>Physical objects.<br>Digital context.</h1>
+            <p>We develop perfectly encoded, permanent static QR codes. No subscriptions, no broken links, just pure, reliable data bridging designed for real-world application.</p>
+            <a href="#contact" class="btn-pill" style="padding: 1rem 2.5rem; font-size: 1rem;">Request a Code</a>
+        </div>
         
-        <main class="left-panel">
-            <nav>
-                <a href="#" class="brand">Qr<span>.dev</span></a>
-                <div class="nav-links">
-                    <a href="#about">Overview</a>
-                    <a href="#capabilities">Capabilities</a>
-                </div>
-            </main>
-
-            <section class="hero-section" id="about">
-                <h1>Physical objects.<br>Digital context.</h1>
-                <p>We develop perfectly encoded, permanent static QR codes. No subscriptions, no broken links, just pure, reliable data bridging designed for real-world application.</p>
-                
-                <div class="cta-group">
-                    <a href="#contact" class="btn-solid">Request a Code</a>
-                    <a href="#capabilities" class="btn-outline">View Matrix Specs</a>
-                </div>
-            </section>
-
-            <section class="capabilities-panel" id="capabilities">
-                <h3>Our Core Capability</h3>
-                <div class="capabilities-grid">
-                    <div class="cap-item">
-                        <h4>Static QR Development</h4>
-                        <p>We hard-code your data directly into the matrix. Generated once, it works forever without dependency infrastructure.</p>
-                    </div>
-                    <div class="cap-item">
-                        <h4>Unbreakable Architecture</h4>
-                        <p>Perfect for offline vCards, raw URLs, Wi-Fi keys, or coordinates baked permanently onto physical assets.</p>
-                    </div>
-                </div>
-            </section>
-
-            <div class="panel-footer">
-                <div>&copy; 2026 Qr.dev. All rights reserved.</div>
-                <div>Mysuru, Karnataka</div>
+        <div class="hero-visual">
+            <div class="qr-card">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=tel:9353427990&color=1d1d1f&bgcolor=ffffff" alt="Static QR Code">
+                <div class="qr-caption">Scan to Connect</div>
             </div>
-        </main>
+        </div>
+    </header>
 
-        <aside class="right-panel" id="contact">
-            
-            <div class="showcase-box">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=tel:9353427990&color=111111&bgcolor=ffffff" alt="Static QR Code">
-                <div class="caption">Scan to Connect</div>
-            </div>
-
-            <div class="contact-block">
-                <h2>Start your project today</h2>
-                <a href="tel:9353427990" class="contact-link">9353427990</a>
+    <section id="capabilities" class="services">
+        <div class="service-container">
+            <div class="service-header">
+                <h2>Our Core Capability</h2>
             </div>
             
-        </aside>
+            <div class="service-grid">
+                <div class="service-item highlight-panel">
+                    <div>
+                        <div class="service-icon">✦</div>
+                        <h3>Static QR Development</h3>
+                        <p>We hard-code your data directly into the matrix. Whether it is a direct URL, an offline vCard, Wi-Fi credentials, or geolocation coordinates, your QR code is generated once and works forever.</p>
+                    </div>
+                    <div class="stat-box">
+                        <min>Architecture</min>
+                        <p style="color: var(--text-dark); font-size: 0.95rem; font-weight: 500;">Unbreakable permanent assets</p>
+                    </div>
+                </div>
 
-    </div>
+                <div class="service-item">
+                    <div>
+                        <div class="service-icon">✓</div>
+                        <h3>Zero Dependencies</h3>
+                        <p>No backend dependencies, no cloud redirects, and absolute offline permanence. The data stays where it belongs: in the code.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-split">
+            <div class="footer-left">
+                <h2>Start your<br>project today.</h2>
+            </div>
+            <div class="footer-right">
+                <a href="tel:9353427990" class="contact-number">9353427990</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div>&copy; 2026 Qr.dev. All rights reserved.</div>
+            <div>Mysuru, Karnataka</div>
+        </div>
+    </footer>
 
 </body>
 </html>
